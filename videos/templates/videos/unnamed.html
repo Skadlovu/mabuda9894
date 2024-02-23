@@ -1,0 +1,154 @@
+{% extends 'base.html'%}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block title %}
+XXXWORLD-{{user.username}}
+{% endblock %}
+{% block content %}
+<style>
+    section {
+        max-width: 70%;
+        margin: 20px auto;
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    form {
+        display: flex;
+        flex-direction: column;
+        max-width: 400px;
+        margin: 0 auto;
+    }
+
+    label {
+        margin-bottom: 8px;
+    }
+
+    textarea {
+        resize: vertical;
+        min-height: 300px;
+        padding: 12px;
+    }
+
+    button {
+        background-color: rgb(236, 224, 222);
+        color: white;
+        padding: 10px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+
+    button:hover {
+        background-color: #2a2424;
+    }
+</style>
+<section id="breadcrumbs" class="breadcrumbs">
+    <div class="container">
+        <div class="d-flex justify-content-between align-items-center">
+            <h2></h2>
+        </div>
+    </div>
+</section><!-- End Breadcrumbs -->
+<section id="about" class="about">
+    <div class="container" data-aos="">
+        <div class="section-header">
+            <h2>{{ user.username }}'s Profile Information</h2>
+        </div>
+        <div class="row g-4 g-lg-5" data-aos="" data-aos-delay="">
+            <div class="col-lg-5">
+                <div class="about-img">
+                    <img src="{% static '/img/poster.png' %}" class="img-fluid" alt="">
+                </div>
+                <div class="about-img" style="color: red;">
+                    <img src="{{ user.profile.image.url }}">
+                    <p>Joined on: <br>{{ user.date_joined|date:"F j, Y H:i" }}</p>
+                    <p> Last login<br> {{user.last_login|date:"F j, Y H:i"}}</p>
+                </div>
+            </div>
+            <div class="col-lg-12" style="color: red;">
+                <h3 class="pt-0 pt-lg-5" style="color: red;"> {{user.username}}</h3>
+
+                <!-- Tabs -->
+                <ul class="nav nav-pills mb-3">
+                    <li><a class="nav-link active" data-bs-toggle="pill" href="#tab1"> User information</a></li>
+                    <li><a class="nav-link" data-bs-toggle="pill" href="#tab2"> User videos</a></li>
+                    <li><a class="nav-link" data-bs-toggle="pill" href="#tab3">User photos</a></li>
+                </ul><!-- End Tabs -->
+
+                <!-- Tab Content -->
+                <div class="tab-content">
+                    <div class="tab-pane show active" id="tab1">
+                        <div class="d-flex align-items-center mt-4">
+
+                                            <div class="about-img">
+                                                <img src="{% static '/img/poster.png' %}" class="img-fluid" alt="">
+                                            </div>
+                                            <div class="about-img" style="color: red;">
+                                                <img src="{{ user.profile.image.url }}">
+                                                <p>Joined on: <br>{{ user.date_joined|date:"F j, Y H:i" }}</p>
+                                                <p> Last login<br> {{user.last_login|date:"F j, Y H:i"}}</p>
+                                            </div>
+                                            </div>
+                        </div>
+                        <div class=" row">
+
+                        </div>
+                    </div><!-- End Tab 1 Content -->
+                    <div class="tab-pane  show" id="tab2">
+                        <div class="container">
+                            <div class="row">
+                                {% for video in videos %}
+                                <div class="col-lg-3">
+                                    <div class="post-item col-lg-2">
+                                        <img src="{{video.thumb.url }}" alt="" height="100px" width="100px"
+                                            class="flex-shrink-0">
+                                        <div>
+                                            <h4><a href="{% url 'videos:video' video.id %}">View video details</a></h4>
+                                        </div>
+                                    </div><!-- End recent post item-->
+
+                                </div>
+                                {% endfor %}
+
+                            </div>
+
+
+                        </div>
+
+
+                    </div><!-- End Tab 2 Content -->
+
+                    <div class="tab-pane  show" id="tab3">
+                        <div class="container">
+                            <div class="row">
+                                {% for photo in photos %}
+                                <div class="col-lg-3">
+                                    <div class="post-item col-lg-2">
+                                        <img src="{{photo.content.url }}" alt="" height="100px" width="100px"
+                                            class="flex-shrink-0">
+                                        <div>
+                                            <h4><a href="{% url 'photo' photo.id %}">View photo details</a></h4>
+                                        </div>
+                                    </div>
+                                </div><!-- End recent post item-->
+                                {% endfor %}
+                            </div>
+
+                        </div>
+
+                    </div><!-- End Tab 3 Content -->
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+</section>
+
+{% endblock %}
