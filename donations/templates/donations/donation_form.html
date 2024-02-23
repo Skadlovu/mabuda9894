@@ -1,0 +1,76 @@
+{% extends 'base.html'%}
+{% load crispy_forms_tags %}
+{% block title %}
+XXXWORLD-DONATIONS
+{% endblock %}
+
+
+{% block content %}
+<style>
+    section {
+        max-width: 70%;
+        margin: 20px auto;
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    form {
+        display: flex;
+        flex-direction: column;
+        max-width: 400px;
+        margin: 0 auto;
+    }
+
+    label {
+        margin-bottom: 8px;
+    }
+
+    textarea {
+        resize: vertical;
+        min-height: 300px;
+        padding: 12px;
+    }
+
+    button {
+        background-color: rgb(236, 224, 222);
+        color: white;
+        padding: 10px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+
+    button:hover {
+        background-color: #2a2424;
+    }
+</style>
+<section id="breadcrumbs" class="breadcrumbs">
+    <div class="container">
+
+        <div class="d-flex justify-content-between align-items-center">
+            <h2>Donate</h2>
+        </div>
+
+    </div>
+</section><!-- End Breadcrumbs -->
+
+<section>
+    <div style="color: red;" class=" container">
+        <div class=" row">
+            <div class=" form">
+                <h2>Make a Donation</h2>
+                <form method="post" action="{% url 'donations:donate' %}">
+                    {% csrf_token %}
+                    {{ form |crispy }}
+                    <button type="submit">Donate</button>
+                </form>
+
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}
